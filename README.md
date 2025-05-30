@@ -93,7 +93,7 @@ Edit `multiverse-config.json` to add/remove MCP servers. Current servers:
 
 - Memory - Persistent memory across sessions
 - GitHub - Repository access and operations
-- Sequential Thinking - Step-by-step reasoning
+- Sequentialthinking - Step-by-step reasoning
 - Context7 - Context management
 - Filesystem - File operations in workspace
 - Notion - Notion database and page access

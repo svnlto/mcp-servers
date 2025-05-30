@@ -1,0 +1,25 @@
+---
+services:
+  # Single multiverse instance managing all MCP servers
+  multiverse:
+    image: node:18-alpine
+    container_name: mcp-multiverse
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data/memory:/app/data
+      - ./workspace:/workspace
+      - ./multiverse-config.json:/app/config.json
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_OWNER=${GITHUB_OWNER:-tropspherehq}
+      - NOTION_TOKEN=${NOTION_TOKEN}
+      - LINEAR_API_KEY=${LINEAR_API_KEY}
+      - MEMORY_FILE_PATH=/app/data/memory.json
+    working_dir: /app
+    command: sh -c "npx -y mcp-server-multiverse config.json"
+    restart: unless-stopped
+
+volumes:
+  memory_data:
+  workspace_data:

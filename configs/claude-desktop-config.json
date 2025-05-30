@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "multiverse": {
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd ~/.config/nix && vagrant ssh -- 'cd /home/vagrant/mcp-servers && docker-compose exec -T multiverse npx mcp-server-multiverse config.json'"
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "tab_size": 2,
+  "soft_wrap": "editor_width",
+  "remove_trailing_whitespace_on_save": true,
+  "ensure_final_newline_on_save": true,
+  "format_on_save": "on",
+  "languages": {
+    "JSON": {
+      "tab_size": 2
+    },
+    "YAML": {
+      "tab_size": 2
+    },
+    "JavaScript": {
+      "tab_size": 2
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "multiverse": {
+      "command": "docker",
+      "args": [
+        "compose", 
+        "-f", "/home/vagrant/mcp-servers/docker-compose.yml",
+        "exec", "-T", "multiverse", 
+        "npx", "mcp-server-multiverse", "config.json"
+      ]
+    }
+  }
+}

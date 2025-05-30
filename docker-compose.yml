@@ -11,8 +11,7 @@ services:
       - ./workspace:/workspace
       - ./multiverse-config.json:/app/config.json
     environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN}
-      - GITHUB_OWNER=${GITHUB_OWNER:-tropspherehq}
+      - GITHUB_OWNER=${GITHUB_OWNER:-xxx}
       - NOTION_TOKEN=${NOTION_TOKEN}
       - LINEAR_API_KEY=${LINEAR_API_KEY}
       - MEMORY_FILE_PATH=/app/data/memory.json

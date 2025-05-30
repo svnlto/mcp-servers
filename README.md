@@ -40,7 +40,6 @@ Run `make help` to see all available commands:
 
 1. Copy the example: `make setup` (or `cp .env.example .env`)
 2. Edit `.env` with your actual API tokens:
-   - `GITHUB_TOKEN` - GitHub Personal Access Token
    - `GITHUB_OWNER` - Your GitHub username
    - `NOTION_TOKEN` - Notion API token
    - `LINEAR_API_KEY` - Linear API key

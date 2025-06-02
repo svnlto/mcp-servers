@@ -1,13 +1,40 @@
 {
-  "mcpServers": {
-    "multiverse": {
-      "command": "docker",
-      "args": [
-        "compose", 
-        "-f", "/home/vagrant/mcp-servers/docker-compose.yml",
-        "exec", "-T", "multiverse", 
-        "npx", "mcp-server-multiverse", "config.json"
-      ]
+  "context_servers": {
+    "github": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "supergateway", "--sse", "http://localhost:9001/sse"]
+      }
+    },
+    "linear": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "supergateway", "--sse", "http://localhost:9002/sse"]
+      }
+    },
+    "notion": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "supergateway", "--sse", "http://localhost:9003/sse"]
+      }
+    },
+    "filesystem": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "supergateway", "--sse", "http://localhost:9004/sse"]
+      }
+    },
+    "memory": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "supergateway", "--sse", "http://localhost:9005/sse"]
+      }
+    },
+    "sequential-thinking": {
+      "command": {
+        "path": "npx",
+        "args": ["-y", "supergateway", "--sse", "http://localhost:9006/sse"]
+      }
     }
   }
 }

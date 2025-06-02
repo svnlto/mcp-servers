@@ -1,24 +1,114 @@
----
 services:
-  # Single multiverse instance managing all MCP servers
-  multiverse:
-    image: node:18-alpine
-    container_name: mcp-multiverse
+  mcp-github:
+    image: supercorp/supergateway
+    ports:
+      - "9001:8001" # Map to 9000 range
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_OWNER
+    command:
+      [
+        "--stdio",
+        "npx -y @modelcontextprotocol/server-github",
+        "--port",
+        "8001",
+        "--cors",
+      ]
+    restart: unless-stopped
     stdin_open: true
     tty: true
-    volumes:
-      - ./data/memory:/app/data
-      - ./workspace:/workspace
-      - ./multiverse-config.json:/app/config.json
-    environment:
-      - GITHUB_OWNER=${GITHUB_OWNER}
-      - NOTION_TOKEN=${NOTION_TOKEN}
-      - LINEAR_API_KEY=${LINEAR_API_KEY}
-      - MEMORY_FILE_PATH=/app/data/memory.json
-    working_dir: /app
-    command: sh -c "npx -y mcp-server-multiverse config.json"
-    restart: unless-stopped
+    networks:
+      - mcp-network
 
-volumes:
-  memory_data:
-  workspace_data:
+  mcp-linear:
+    image: supercorp/supergateway
+    ports:
+      - "9002:8002" # Map to 9000 range
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - LINEAR_API_KEY
+    command:
+      ["--stdio", "npx -y @ibraheem4/github-mcp", "--port", "8002", "--cors"]
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+  mcp-notion:
+    image: supercorp/supergateway
+    ports:
+      - "9003:8003" # Map to 9000 range
+    environment:
+      OPENAPI_MCP_HEADERS: '{"Authorization": "Bearer ${NOTION_TOKEN}", "Notion-Version": "2022-06-28"}'
+    command:
+      [
+        "--stdio",
+        "npx -y @notionhq/notion-mcp-server",
+        "--port",
+        "8003",
+        "--cors",
+      ]
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+  mcp-filesystem:
+    image: supercorp/supergateway
+    ports:
+      - "9004:8004"
+    volumes:
+      - /home/vagrant/projects:/workspace
+    command: '--stdio "npx -y @modelcontextprotocol/server-filesystem /workspace" --port 8004 --cors'
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+    networks:
+      - mcp-network
+
+  mcp-memory:
+    image: supercorp/supergateway
+    ports:
+      - "9005:8005" # Map to 9000 range
+    volumes:
+      - /home/vagrant/.shared-memory:/app/data
+    environment:
+      - MEMORY_FILE_PATH=/app/data/memory.json
+    command:
+      [
+        "--stdio",
+        "npx -y @modelcontextprotocol/server-memory",
+        "--port",
+        "8005",
+        "--cors",
+      ]
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+  mcp-sequential-thinking:
+    image: supercorp/supergateway
+    ports:
+      - "9006:8006" # Map to 9000 range
+    command:
+      [
+        "--stdio",
+        "npx -y @modelcontextprotocol/server-sequential-thinking",
+        "--port",
+        "8006",
+        "--cors",
+      ]
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

@@ -82,6 +82,8 @@ docker-compose pull
 | **mcp-filesystem** | 9004 | File system operations | - |
 | **mcp-memory** | 9005 | Persistent memory | - |
 | **mcp-sequential-thinking** | 9006 | Step-by-step reasoning | - |
+| **mcp-context7** | 9007 | Up-to-date documentation | `DEFAULT_MINIMUM_TOKENS` |
+| **mcp-prisma** | 9009 | Prisma database management | - |
 
 ## Configuration
 
@@ -130,6 +132,14 @@ Connect to individual servers:
     "sequential-thinking": {
       "command": "npx", 
       "args": ["-y", "supergateway", "--sse", "http://localhost:9006/sse"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "supergateway", "--sse", "http://localhost:9007/sse"]
+    },
+    "prisma": {
+      "command": "npx",
+      "args": ["-y", "supergateway", "--sse", "http://localhost:9009/sse"]
     }
   }
 }
@@ -190,6 +200,20 @@ Connect to individual servers:
 - Step-by-step reasoning and planning
 - Multi-step problem solving
 - No external dependencies
+
+### Context7 MCP Server (Port 9007)
+- Fetches up-to-date, version-specific documentation
+- Pulls code examples straight from the source
+- Helps avoid outdated training data and hallucinated APIs
+- Usage: Add "use context7" to your prompts
+- Environment: `DEFAULT_MINIMUM_TOKENS` (default: 10000)
+
+### Prisma MCP Server (Port 9009)
+- Prisma database management and schema operations
+- Database instance management for Postgres
+- Schema migrations and database operations
+- Early access features for Prisma Platform
+- No API key required (uses Prisma CLI authentication)
 
 ## Troubleshooting
 

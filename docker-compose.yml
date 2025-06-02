@@ -109,6 +109,37 @@ services:
     networks:
       - mcp-network
 
+  mcp-context7:
+    image: supercorp/supergateway
+    ports:
+      - "9007:8007" # Map to 9000 range
+    environment:
+      - DEFAULT_MINIMUM_TOKENS=10000
+    command:
+      [
+        "--stdio",
+        "npx -y @upstash/context7-mcp@latest",
+        "--port",
+        "8007",
+        "--cors",
+      ]
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
+  mcp-prisma:
+    image: supercorp/supergateway
+    ports:
+      - "9009:8009" # Map to 9000 range
+    command: '--stdio "npx -y prisma mcp" --port 8009 --cors'
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - mcp-network
+
 networks:
   mcp-network:
     driver: bridge

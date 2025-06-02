@@ -23,6 +23,14 @@
     "sequential-thinking": {
       "command": "npx", 
       "args": ["-y", "supergateway", "--sse", "http://localhost:9006/sse"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "supergateway", "--sse", "http://localhost:9007/sse"]
+    },
+    "prisma": {
+      "command": "npx",
+      "args": ["-y", "supergateway", "--sse", "http://localhost:9009/sse"]
     }
   }
 }
